@@ -47,27 +47,51 @@ class Game:
                 self.end_turn()
 
     def hunt(self):
-        # Implement hunting action
-        pass
+        self.ui.display_hunting_screen()
+        result = random.choice(["SUCCESS", "FAILURE"])
+        if result == "SUCCESS":
+            self.player.hunger -= 10
+            self.player.thirst += 5
+            self.ui.display_message("You successfully hunted for food.")
+        else:
+            self.player.hunger += 5
+            self.player.thirst += 5
+            self.ui.display_message("You failed to hunt for food.")
 
     def recon(self):
-        # Implement recon action
-        pass
+        self.ui.display_recon_screen()
+        result = random.choice(["SUCCESS", "FAILURE"])
+        if result == "SUCCESS":
+            self.player.thirst += 5
+            self.ui.display_message("You successfully scouted the area.")
+        else:
+            self.player.thirst += 10
+            self.ui.display_message("You failed to scout the area.")
 
     def pray(self):
-        # Implement pray action
-        pass
+        self.ui.display_pray_screen()
+        result = random.choice(["SUCCESS", "FAILURE"])
+        if result == "SUCCESS":
+            self.player.thirst += 5
+            self.ui.display_message("Your prayer has been answered.")
+        else:
+            self.player.thirst += 10
+            self.ui.display_message("Your prayer went unanswered.")
 
     def move_capital(self):
-        self.select_capital()
+        self.capital = self.ui.get_capital_choice()
+        self.capital.difficulty_factor = self.capital.get_difficulty_factor()
 
     def end_turn(self):
-        # Implement end turn action
-        pass
+        self.player.thirst += 10
+        self.player.hunger += 10
+        self.ui.display_message("You ended your turn.")
 
     def randomize_attributes(self):
-        # Implement attribute randomization
-        pass
+        attributes = []
+        for _ in range(3):
+            attributes.append(random.randint(1, 10))
+        return attributes
 
 game = Game()
 game.start_game()
